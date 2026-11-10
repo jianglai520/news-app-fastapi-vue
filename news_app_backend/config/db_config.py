@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
-ASYNC_DATABASE_URL = os.getenv("DATABASE_URL")
+ASYNC_DATABASE_URL = os.getenv("DATABASE_URL")   # async_database_url 添加到了 .env 防止泄露
 if not ASYNC_DATABASE_URL:
     raise RuntimeError(f"缺少 DATABASE_URL，请在 {BASE_DIR / '.env'} 里配置")
 
