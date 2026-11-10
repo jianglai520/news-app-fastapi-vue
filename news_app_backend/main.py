@@ -3,6 +3,7 @@ from routers import news
 from contextlib import asynccontextmanager
 from config.db_config import async_engine, close_db
 from sqlalchemy import text
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -18,6 +19,14 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="新闻资讯 API", version="0.1.0", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = ["*"],   # 允许的源，开发当中允许所有源，生产环境务必指定源
+    allow_credentials = True,   # 允许携带 Cookie
+    allow_methods = ["*"],  # 允许的请求方法
+    allow_headers = ["*"]   # 允许的请求头
+)
 
 
 @app.get("/")
