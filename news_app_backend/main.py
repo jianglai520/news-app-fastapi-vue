@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import news
+from routers import news, users
 from contextlib import asynccontextmanager
 from config.db_config import async_engine, close_db
 from sqlalchemy import text
@@ -20,6 +20,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="新闻资讯 API", version="0.1.0", lifespan=lifespan)
 
+# 解决跨域资源共享（CORS）
 app.add_middleware(
     CORSMiddleware,
     allow_origins = ["*"],   # 允许的源，开发当中允许所有源，生产环境务必指定源
@@ -36,3 +37,4 @@ async def get_news():
 
 # 挂载路由/注册路由
 app.include_router(news.router)
+app.include_router(users.router)
