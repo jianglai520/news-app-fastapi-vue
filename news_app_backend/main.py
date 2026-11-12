@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from utils.exception_handlers import register_exception_handlers
-from routers import news, users
+from routers import news, users, favorite
 from contextlib import asynccontextmanager
 from config.db_config import async_engine, close_db
 from sqlalchemy import text
@@ -42,3 +42,4 @@ async def get_news():
 # 挂载路由/注册路由
 app.include_router(news.router)
 app.include_router(users.router)
+app.include_router(favorite.router)
