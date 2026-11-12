@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from utils.exception_handlers import register_exception_handlers
 from routers import news, users
 from contextlib import asynccontextmanager
 from config.db_config import async_engine, close_db
@@ -19,6 +20,9 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="新闻资讯 API", version="0.1.0", lifespan=lifespan)
+
+# 注册全局异常处理器
+register_exception_handlers(app)
 
 # 解决跨域资源共享（CORS）
 app.add_middleware(
